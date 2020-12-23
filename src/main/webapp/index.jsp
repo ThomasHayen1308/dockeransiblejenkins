@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2 stype="colour: red">Deployed using Jenkins, Ansible!! -2</h2>
+<h2 stype="color: red">Projectje IaC is EZ AF</h2>
 </body>
 </html>
