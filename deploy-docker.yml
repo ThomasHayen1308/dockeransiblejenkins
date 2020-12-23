@@ -26,6 +26,11 @@
       yum:
         name: lvm2
         state: latest
+        
+    - name: Install docker-py python module
+      pip:
+        name: docker-py
+        state: present
 
     - name: Add Docker repo
       get_url:
