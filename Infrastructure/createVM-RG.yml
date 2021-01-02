@@ -1,0 +1,76 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create resource group
+    azure_rm_resourcegroup:
+      name: dev-server-RG
+      location: westeurope
+
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: dev-server-RG
+      name: devserverVnet
+      address_prefixes: "10.0.0.0/16"
+
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: dev-server-RG
+      name: devserverSubnet
+      address_prefix: "10.0.1.0/24"
+      virtual_network: devserverVnet
+
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: dev-server-RG
+      allocation_method: Static
+      name: webserverPublicIP
+      domain_name: emerging-tech-webserver
+    register: output_ip_address
+
+  - name: Dump public IP for VM which will be created
+    debug:
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+      resource_group: dev-server-RG
+      name: webserverNetworkSecurityGroup
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1002
+          direction: Inbound
+        - name: HTTP
+          protocol: Tcp
+          destination_port_range: 80
+          access: Allow
+          priority: 1001
+          direction: Inbound
+
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: dev-server-RG
+      name: webserverNIC
+      virtual_network: devserverVnet
+      subnet: devserverSubnet
+      public_ip_name: webserverPublicIP
+      security_group: webserverNetworkSecurityGroup
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: dev-server-RG
+      name: webserver
+      vm_size: Standard_DS1_v2
+      admin_username: azureuser
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/azureuser/.ssh/authorized_keys
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/EAvXphy2a8Ej8XLtphd9w2rOAKakkIrOal75biCDeV8zPvmAT8/7O7O8spv8Ge5ZAddDRS9T06UXj7LGbJjaB2fHAYKaZO+PHQOeOa0uwg9+Bk+rNW5jGd4kEADCkD9er2W5tRCoZfO/kz/nyZiYPDdaJaaNvYcF6krUi39ULgOJco4fIi8Q00CFabQUrw1q/g6TQZMfEmlMHeqCmtzqZDwjs2fufWO6Vpm1qgb90tul54FjSkRyHyq+Bv7Er4WcmYv5KPY4Ra8TPT+hJgqQUCcKCUltRsEGJZeDAF8VC7GWSDH4Jtpn6+eOdl1SSQ0d+vheI14+LvzscbZWP+h7 azureuser@webserver
+      network_interfaces: webserverNIC
+      image:
+        offer: CentOS
+        publisher: OpenLogic
+        sku: '7.5'
+        version: latest
