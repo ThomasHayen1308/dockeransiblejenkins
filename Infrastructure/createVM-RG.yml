@@ -24,7 +24,7 @@
     azure_rm_publicipaddress:
       resource_group: dev-server-RG
       allocation_method: Static
-      name: webserverPublicIP
+      name: dev-server-pubip
       domain_name: iacproject1
     register: output_ip_address
 
@@ -56,12 +56,12 @@
       name: webserverNIC
       virtual_network: devserverVnet
       subnet: devserverSubnet
-      public_ip_name: webserverPublicIP
+      public_ip_name: dev-server-pubip
       security_group: webserverNetworkSecurityGroup
   - name: Create VM
     azure_rm_virtualmachine:
       resource_group: dev-server-RG
-      name: webserver
+      name: dev-server
       vm_size: Standard_DS1_v2
       admin_username: azureuser
       ssh_password_enabled: false
