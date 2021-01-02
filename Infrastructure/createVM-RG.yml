@@ -25,7 +25,7 @@
       resource_group: dev-server-RG
       allocation_method: Static
       name: webserverPublicIP
-      domain_name: emerging-tech-webserver
+      domain_name: iacproject1
     register: output_ip_address
 
   - name: Dump public IP for VM which will be created
