@@ -1,2 +1,2 @@
 [dev-server]
-iacprojectteam1.westeurope.cloudapp.azure.com ansible_user=dev-user
+iacprojectteam1.westeurope.cloudapp.azure.com ansible_user=azureuser
