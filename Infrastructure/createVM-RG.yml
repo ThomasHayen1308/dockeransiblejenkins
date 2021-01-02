@@ -25,7 +25,7 @@
       resource_group: dev-server-RG
       allocation_method: Static
       name: dev-server-pubip
-      domain_name: iacproject1
+      domain_name: iacprojectteam1
     register: output_ip_address
 
   - name: Dump public IP for VM which will be created
