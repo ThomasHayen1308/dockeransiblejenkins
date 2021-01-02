@@ -28,9 +28,9 @@
         state: latest
     
     - name: Install setuptools
-      pip:
+      yum:
         name: python-setuptools
-        state: present   
+        state: latest   
     
     - name: Install docker-py python module
       pip:
