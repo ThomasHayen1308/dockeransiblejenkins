@@ -30,7 +30,7 @@
     - name: Install setuptools
       pip:
         name: python-setuptools
-        present: latest   
+        present: present   
     
     - name: Install docker-py python module
       pip:
