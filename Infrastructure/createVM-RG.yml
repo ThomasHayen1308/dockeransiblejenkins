@@ -67,7 +67,7 @@
       ssh_password_enabled: false
       ssh_public_keys:
         - path: /home/azureuser/.ssh/authorized_keys
-          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDvnqp7PHTCqCv2KUObDjL9hcBUAT1wkV2kfeEiq8G+XEy5ofeI1y4rguNvQLMiZcF2O3c9rbPtf+qqSdKilZ1ASnhzsxZ2pmUKIXlZ5T9XDik+37OtDmkWn8ypi/nLynSlLnc9G7WmCrCBzI8EZX9wJe9F3qYgq5NWPC4PPKStdfjgjhv5+jRyVYVOW/s0DP+j6bHqOqHo4u/ngFjbyOxgl4N3PPVo3RViyn/8PApoJMf6XeEvRpfIISTJR5Q+j2UV0Klkd86cj21qbIPN+bQ20FlcTt9vmi78eWakSqL25cjwhLuCAu4q6xOc4pOHK1m8wVZcl3KpBdB5u4B7FEHAwzn+BB5iZ6H7LfTQ8fUsSvavejFHdSzZhoqZoEV2i+VQTk/L2MEEKdTfwgQAjBH//PBSUgZDxFiPOcib3FMardZ5ggqQ3KaMf6M9Nvf22eQBLqSD+rjQsSKOdEtFshKF5bebYzggEiGg7w80JX+mxKHEeg1M0AhzL6Nz8pXwjfs= azureuser@jenkins
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFIHMFirbqnrINNfLBfyNpYVrE0hwPgzYY6kuP3YDIT3FAF8Zqkzmq+KrwEH8O8Rx+LfCeRf4NOz/8AZPdv4f+tMY5o61tqU2G6+zZLgkw7lCfjrLRr6duAs6Rg/BDxRWHPOwp8YJI3/LJ1+cBRD4/Q/s8Fv3ACkmoGmx2KjnhxsGL69GZHjF+RFAVyTNgFKRy+3uxLHDh7syTXdCwF+bIkcp9uKHfmxq6muvLVcm8U9tztWa9TnOQuAYvHDe19XNvF7iagpn9LqVASxWZbSrqsKYwhsIcbE7sVJWOKZ8qXgZjnb/9Uk5D6WyHkXKJVpEb7ZYNweZpemzXIlTEgIUB azureuser@azure
       network_interfaces: webserverNIC
       image:
         offer: CentOS
