@@ -1,4 +1,4 @@
-- name: Delete webserverIAC resource group
+- name: Delete dev-server-RG resource group
   hosts: localhost
   connection: local
   tasks:
