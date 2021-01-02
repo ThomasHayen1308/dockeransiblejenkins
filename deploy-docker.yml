@@ -1,4 +1,99 @@
 ---
+- name: Delete IaC-webserver
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove a VM and all resources that were autocreated
+      azure_rm_virtualmachine:
+       resource_group: rg-webserver
+       name: IaC-webserver
+       remove_on_absent: all_autocreated
+       state: absent
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+    
+  tasks:
+      # Creating a Resource Group
+    - name: Create resource group
+      azure_rm_resourcegroup:
+          name: rg-webserver
+          location: westeurope
+    # Creating a Virtual Network
+    - name: Create virtual network
+      azure_rm_virtualnetwork:
+          resource_group: rg-webserver
+          name: vnet-web
+          address_prefixes: "10.0.0.0/16"
+    
+    # Add a subnet
+    - name: Add subnet
+      azure_rm_subnet:
+          resource_group: rg-webserver
+          name: snet-web
+          address_prefix: "10.0.2.0/24"
+          virtual_network: vnet-web
+    
+    # Add a public IP
+    - name: Create public IP address
+      azure_rm_publicipaddress:
+          resource_group: rg-webserver
+          allocation_method: Static
+          name: pip-web
+      register: output_ip_address
+        
+    - name: Output public IP
+      debug:
+        msg: "The public IP is {{ output_ip_address.state.ip_address }}"
+    
+    # Creating a Network Security Group
+    - name: Create Network Security Group
+      azure_rm_securitygroup:
+        resource_group: rg-webserver
+        name: nsg-web
+        rules:
+          - name: SSH
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 1001
+            direction: Inbound
+          
+          - name: HTTP
+            protocol: Tcp
+            destination_port_range:
+              - 80
+              - 443
+            access: Allow
+            priority: 1002
+            direction: Inbound
+               
+     # Create a Virtual Network Interface Card
+    - name: Create a network interface
+      azure_rm_networkinterface:
+          name: nic-web
+          resource_group: rg-webserver
+          virtual_network: vnet-web
+          subnet_name: snet-web
+          security_group: nsg-web
+          public_ip_name: pip-web
+            
+     # Creating a VM
+    - name: Create VM
+      azure_rm_virtualmachine:
+         resource_group: rg-webserver
+         name: IaC-webserver
+         vm_size: Standard_DS1_v2
+         admin_username: ansadmin
+         admin_password: Iac4nsPaswd!
+         network_interfaces: nic-web
+         os_type: Linux
+         image:
+           offer: CentOS
+           publisher: OpenLogic
+           sku: '7.5'
+           version: latest
+
 - hosts: dev-server
   become: True
   tasks:
