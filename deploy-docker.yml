@@ -26,7 +26,12 @@
       yum:
         name: lvm2
         state: latest
-        
+    
+    - name: Install setuptools
+      pip:
+        name: python-setuptools
+        present: latest   
+    
     - name: Install docker-py python module
       pip:
         name: docker-py
