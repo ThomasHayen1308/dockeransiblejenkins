@@ -8,7 +8,7 @@
 
 <body style="align-content: center; background-color: blanchedalmond">
 
-  <h1>EMERGING TECHNOLOGIES TEAM 1</h1>
+  <h1>EMERGING TECHNOLOGIES TEAM 1: Project IaC</h1>
 
 </body>
 </html>
