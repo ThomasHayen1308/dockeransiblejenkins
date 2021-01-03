@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2 stype="color: red">IAC Project Team KOMOP MAN</h2>
+<h2 stype="color: red">IAC Project Team 666</h2>
 </body>
 </html>
